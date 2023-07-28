@@ -11,7 +11,7 @@
 - 多くの問題のプールが参考になる
 - 問題を作ることにより簡易的なアウトプットができる
 ## テーブル
-[ER図](https://github.com/peterdo415/original_product/blob/main/table.md)
+[ER図](https://github.com/peterdo415/original_product/blob/main/Documents/table.md)
 ## 機能要件
 - ユーザーアカウント管理機能: ユーザーがアカウントを作成し、ログイン/ログアウトできるようにする
 - 問題作成機能: ユーザーが問題を作成し、それをデータベースに保存できるようにする
@@ -28,4 +28,4 @@
 ## 画面遷移図（業務フロー）
 
 ## システム構成図（aws, Docker等）
-[システム構成図](https://github.com/peterdo415/original_product/blob/main/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3.png)
+[システム構成図](https://github.com/peterdo415/original_product/blob/main/Documents/%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E6%A7%8B%E6%88%90%E5%9B%B3.png)
