@@ -8,6 +8,7 @@ erDiagram
   Quiz ||--o{ Answer : has
   Quiz ||--o{ Message : has
   Quiz ||--|{ Option : has
+  Quiz ||--|{ Category : has
 
   User {
     int id
@@ -22,7 +23,7 @@ erDiagram
 
   Option {
     int id
-    string quiz_text
+    string content
     int quiz_id "foreign key"
   }
 
@@ -41,8 +42,14 @@ erDiagram
 
   Message {
     int id
-    string message_text
+    string content
     int user_id "foreign key"
+    int quiz_id "foreign key"
+  }
+
+  Category {
+    int id
+    string name
     int quiz_id "foreign key"
   }
 ```
