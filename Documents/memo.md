@@ -3,4 +3,4 @@ Rails 7 ではrails sコマンドを実行しても JavaScript や CSS がビル
 また、./bin/devで起動すると JavaScript と CSS を変更したときに自動的に再ビルドもしてくれるので、今後はこちらで起動することを忘れないようにしたい。
 
 ## rails new
-`rails new product -c tailwind -d mysql -T -B`
+`rails new product -c tailwind -d mysql -T -B -c tailwind`

@@ -1,11 +1,11 @@
 FROM ruby:3.2.2
 ARG RUBYGEMS_VERSION=3.3.20
-RUN mkdir /product
-WORKDIR /product
-COPY Gemfile /product/Gemfile
-COPY Gemfile.lock /product/Gemfile.lock
+RUN mkdir /app
+WORKDIR /app
+COPY Gemfile /app//Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
-COPY . /product
+COPY . /app
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
