@@ -1,0 +1,16 @@
+<div class="h-[calc(100vh-58.59px)] min-h-[400px]" class="d-flex align-items-center">
+  <div class="container">
+    <div class="row justify-center">
+      <div class="col-xl-5 col-md-8">
+        <%= form_with model: @user, url: signup_path, class: 'bg-white rounded-5 shadow-5-strong p-5' do |f| %>
+          <div class="form-outline mb-4">
+            <%= f.text_field :name, class: 'form-control' %>
+            <%= f.label :name, class: 'form-label' %>
+            <p>google連携</p>
+          </div>
+          <%= f.submit class: 'btn btn-primary btn-block' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
