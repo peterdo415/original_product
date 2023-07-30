@@ -19,9 +19,10 @@ erDiagram
   Quiz {
     int id
     int difficulty
-    text first_content
-    text second_content
-    text third_content
+    text problem_statement
+    text first_option
+    text second_option
+    text third_option
     int correct_option "正解の選択肢"
     int user_id "foreign key"
   }
