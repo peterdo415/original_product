@@ -29,7 +29,7 @@ erDiagram
 
   Answer {
     int id
-    int answer "回答時の選択肢"
+    int option "回答時の選択肢"
     int user_id "foreign key"
     int quiz_id "foreign key"
   }
@@ -50,7 +50,6 @@ erDiagram
   Category {
     int id
     string name
-    int quiz_id "foreign key"
   }
 
   QuizCategory {
