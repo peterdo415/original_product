@@ -1,4 +1,22 @@
-<div>
-  <h1 class="font-bold text-4xl">Users#edit</h1>
-  <p>Find me in app/views/users/edit.html.erb</p>
+<div class="py-10">
+  <div class="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <%= form_with model: @user, url: user_path(@user), method: :patch, class: 'space-y-4' do |f| %>
+          <div class="mb-5">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+              ユーザー編集
+            </h3>
+          </div>
+          <div>
+            <%= f.label :name, class: 'block text-sm font-medium text-gray-700' %>
+            <%= f.text_field :name, class: 'form-input rounded-md shadow-sm mt-1 block w-full' %>
+          </div>
+          <div>
+            <%= f.submit '更新する', class: 'w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

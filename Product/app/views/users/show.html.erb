@@ -1,15 +1,37 @@
-<% set_meta_tags title: @user.name %>
-<div class="container mt-3">
-  <div class="row">
-    <div class="col-md-10 offset-md-1">
-      <div class="card">
-        <div class="card-header">
-          <%= render @user %>
+<div class="py-10">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <div class="mb-5">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <%= @user.name %>さんのプロフィール
+          </h3>
         </div>
-        <div class="card-body">
-          <div class="row">
-            <%= render partial: '', collection: @user.quizzes, as: :quiz %>
-          </div>
+        <div class="mb-5">
+          <p>ユーザー名: <%= @user.name %></p>
+        </div>
+        <div class="mb-5">
+          <%= link_to 'プロフィールを編集', edit_user_path(@user), class: 'text-indigo-600 hover:text-indigo-900' %>
+        </div>
+        <div class="mb-5">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <%= @user.name %>さんが作成した問題一覧
+          </h3>
+          <% if @user.quizzes.any? %>
+            <ul class="mt-4 space-y-4">
+              <% @user.quizzes.paginate(page: params[:page], per_page: 10).each do |quiz| %>
+                <li class="text-gray-900">
+                  <%= link_to quiz.problem_statement, quiz_path(quiz) %>
+                </li>
+              <% end %>
+            </ul>
+            <%= will_paginate @user.quizzes %>
+          <% else %>
+            <p class="mt-4 text-gray-500">まだ問題を作成していません。</p>
+          <% end %>
+        </div>
+        <div class="mb-5">
+          <p>獲得ポイント: <%= @user.points.sum(:point) %></p>
         </div>
       </div>
     </div>
