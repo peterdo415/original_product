@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  #root 'quizzes#index'
-  root 'users#new'
+  root 'quizzes#index'
+  
   # ログインページ
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
@@ -12,4 +12,14 @@ Rails.application.routes.draw do
 
   # その他ユーザー関連
   resources :users, only: %i[edit update show destroy]
+
+  # 一覧以外の問題関連
+  resources :quizzes, only: %i[edit new create update show destroy] do
+    # 回答
+    resources :answers, only: :create
+  end
+
+  # 検索
+  post '/quizzes', to: 'quizzes#search', as: 'search_quizzes'
+
 end

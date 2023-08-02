@@ -1,0 +1,43 @@
+<!-- app/views/quizzes/show.html.erb -->
+<script>
+  // チェックボックスをクリックしたときに他の選択肢のチェックを外す
+  const checkboxes = document.querySelectorAll('input[type="radio"]');
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('click', (event) => {
+      checkboxes.forEach((otherCheckbox) => {
+        if (otherCheckbox !== checkbox) {
+          otherCheckbox.checked = false;
+        }
+      });
+    });
+  });
+</script>
+
+<div class="container mt-4">
+  <div class="bg-white p-4 rounded-lg shadow-md">
+    <h3 class="text-lg font-semibold mb-2"><%= @quiz.problem_statement %></h3>
+    
+    <% if logged_in? && @quiz.user == current_user %>
+      <%= link_to '編集', edit_quiz_path(@quiz), class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold mb-2' %>
+    <% end %>
+
+    <%= form_with model: @quiz, url: quiz_answers_path(@quiz), method: :post do |f| %>
+      <div class="mb-2">
+        <%= f.label :option, class: 'font-semibold' %>
+      </div>
+      <div class="mb-4">
+        <%= f.radio_button :option, '1', id: 'option_1' %>
+        <%= f.label :option_1, '選択肢1', for: 'option_1' %>
+      </div>
+      <div class="mb-4">
+        <%= f.radio_button :option, '2', id: 'option_2' %>
+        <%= f.label :option_2, '選択肢2', for: 'option_2' %>
+      </div>
+      <div class="mb-4">
+        <%= f.radio_button :option, '3', id: 'option_3' %>
+        <%= f.label :option_3, '選択肢3', for: 'option_3' %>
+      </div>
+      <%= f.submit '回答する', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+    <% end %>
+  </div>
+</div>
