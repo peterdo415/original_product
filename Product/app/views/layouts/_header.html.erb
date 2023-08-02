@@ -1,30 +1,22 @@
-<!-- Navbar -->
-<nav id="header" class="navbar navbar-expand-lg navbar-light bg-light">
-  <!-- Container wrapper -->
-  <div class="container">
-    <!-- Navbar brand -->
-    <%= link_to root_path, class: 'navbar-brand me-2' do %>
-      <%= image_tag 'logo.png', height: 30 %>
+<!-- app/views/layouts/_header.html.erb -->
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <%= link_to root_path, class: 'flex items-center text-white font-semibold text-lg' do %>
+      <%= image_tag 'logo.png', alt: 'Logo', class: 'h-8 mr-2' %>
+      MyApp
     <% end %>
 
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarButtonsExample">
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          問題一覧
-        </li>
-      </ul>
-      <!-- Left links -->
-
-      <div class="flex items-center">
-        <% unless logged_in? %>
-          <%= link_to 'ログイン', login_path, class: 'btn btn-link px-3 me-2' %>
-          <%= link_to 'サインアップ', signup_path, class: 'btn btn-primary me-3' %>
-        <% end %>
-
-        <% if logged_in? %>
-
-        <% end %>
-      </div>
+    <div class="flex items-center">
+      <% if logged_in? %>
+        <div class="flex items-center mr-4">
+          <%= link_to current_user.name, user_path(current_user), class: 'text-white font-semibold mr-2' %>
+          <%= link_to 'ログアウト', logout_path, method: :delete, class: 'px-4 py-2 mx-2 rounded-lg bg-red-500 text-white font-semibold' %>
+        </div>
+        <%= link_to '問題作成', new_quiz_path, class: 'px-4 py-2 mx-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+      <% else %>
+        <%= link_to 'ログイン', login_path, class: 'px-4 py-2 mx-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+        <%= link_to '登録', signup_path, class: 'px-4 py-2 mx-2 rounded-lg bg-green-500 text-white font-semibold' %>
+      <% end %>
     </div>
+  </div>
+</nav>

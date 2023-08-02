@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_30_040657) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_02_073156) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "option", null: false
     t.bigint "user_id", null: false
@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_30_040657) do
   end
 
   create_table "points", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "point"
+    t.integer "point", default: 0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
