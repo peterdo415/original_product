@@ -22,7 +22,7 @@ end
 User.all.each do |user|
   10.times do
     quiz = user.quizzes.create(
-      difficulty: rand(1..5),
+      difficulty: rand(0..100),
       problem_statement: Faker::Lorem.sentence,
       first_option: Faker::Lorem.word,
       second_option: Faker::Lorem.word,

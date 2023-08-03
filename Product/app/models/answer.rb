@@ -1,5 +1,5 @@
 class Answer < ApplicationRecord
-  after_create :add_point
+  after_create :update_quiz_counts
 
   belongs_to :user
   belongs_to :quiz
@@ -7,7 +7,19 @@ class Answer < ApplicationRecord
   private
 
   def add_point
-    # ポイントの追加ロジックをここに記述する
-    # 例：self.user.points.create(point: 10)
+    user.points.create(points: quiz.difficulty * 10)
+  end
+
+  def update_quiz_counts
+    # 対象のクイズを取得
+    quiz = self.quiz
+
+    # 回答数をインクリメント
+    quiz.increment!(:answer_count)
+
+    # 正解の場合は正答数もインクリメント
+    if self.option == quiz.correct_option
+      quiz.increment!(:correct_count)
+    end
   end
 end

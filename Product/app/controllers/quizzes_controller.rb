@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :require_login, except: [:show, :index, :search]
+  before_action :require_login, except: [:show, :index, :search, :new]
 
   def index
     @quizzes = Quiz.page(params[:page]).per(params[:per_page] || 10)
@@ -20,6 +20,7 @@ class QuizzesController < ApplicationController
 
   def show
     @quiz = Quiz.find(params[:id])
+    @correct_rate = @quiz.correct_rate
   end
 
   def edit

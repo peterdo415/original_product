@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_073156) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_03_081404) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "option", null: false
     t.bigint "user_id", null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_073156) do
   end
 
   create_table "quizzes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "difficulty", null: false
+    t.integer "difficulty", default: 3, null: false
     t.text "problem_statement", null: false
     t.text "first_option", null: false
     t.text "second_option", null: false
@@ -54,6 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_073156) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "answer_count", default: 0
+    t.integer "correct_count", default: 0
     t.index ["user_id"], name: "index_quizzes_on_user_id"
   end
 

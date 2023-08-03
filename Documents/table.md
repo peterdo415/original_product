@@ -18,7 +18,9 @@ erDiagram
 
   Quiz {
     int id
-    int difficulty
+    int answer_count "回答数 def:0"
+    int correct_count "正解数 def:0"
+    int difficulty "default:0"
     text problem_statement
     text first_option
     text second_option

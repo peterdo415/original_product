@@ -21,6 +21,25 @@
       <%= link_to '編集', edit_quiz_path(@quiz), class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold mb-2' %>
     <% end %>
 
+    <% if @quiz.answer_count < 10 %>
+      <% if @quiz.answer_count == 0 %>
+        <p class="font-semibold mb-2">回答がありません。</p>
+      <% else %>
+        <p class="font-semibold mb-2">試用期間中（回答数が10件以下）</p>
+      <% end %>
+    <% else %>
+      <p class="font-semibold mb-2">正答率: <%= @quiz.correct_rate %> %</p>
+      <p class="font-semibold mb-2">難易度: <%= @quiz.difficulty %></p>
+    <% end %>
+
+    <% if params[:correct].present? %>
+      <% if params[:correct] == "true" %>
+        <p class="text-green-500 font-semibold mb-2">正解です！</p>
+      <% else %>
+        <p class="text-red-500 font-semibold mb-2">不正解です！</p>
+      <% end %>
+    <% end %>
+
     <%= form_with model: @quiz, url: quiz_answers_path(@quiz), method: :post do |f| %>
       <div class="mb-2">
         <%= f.label :option, class: 'font-semibold' %>
