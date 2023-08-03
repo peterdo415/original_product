@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'quizzes#index'
   
-  # ログインページ
+  # ログイン関連
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
   delete '/logout', to: 'sessions#logout'
