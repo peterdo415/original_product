@@ -1,4 +1,21 @@
-<div>
-  <h1 class="font-bold text-4xl">Quizzes#edit</h1>
-  <p>Find me in app/views/quizzes/edit.html.erb</p>
+<div class="container mt-4">
+  <h2 class="text-xl font-semibold mb-4">問題編集</h2>
+
+  <%= form_with model: @quiz, url: quiz_path(@quiz), method: :patch do |f| %>
+    <div class="mb-4">
+      <%= f.label :problem_statement, class: "font-semibold" %>
+      <%= f.text_area :problem_statement, class: "rounded-lg p-2 border border-gray-200 bg-white" %>
+    </div>
+
+    <div class="mb-4">
+      <% @quiz.options.each do |option| %>
+        <%= f.text_field :option, class: "rounded-lg p-2 border border-gray-200 bg-white mb-2", value: option %>
+        <%= f.radio_button :correct_option, option, class: "correct-option" %>
+        <%= f.label :correct_option, "正解", class: "ml-2" %>
+        <br>
+      <% end %>
+    </div>
+
+    <%= f.submit '問題更新', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+  <% end %>
 </div>

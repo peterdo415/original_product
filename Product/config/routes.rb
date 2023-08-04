@@ -20,6 +20,13 @@ Rails.application.routes.draw do
   end
 
   # 検索
-  post '/quizzes', to: 'quizzes#search', as: 'search_quizzes'
+  get '/quizzes', to: 'quizzes#search', as: 'search_quizzes'
 
+  # 表示件数
+  resources :quizzes, only: [:index] do
+    collection do
+      get 'show_10'
+      get 'show_30'
+    end
+  end
 end

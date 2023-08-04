@@ -2,7 +2,11 @@ class QuizzesController < ApplicationController
   before_action :require_login, except: [:show, :index, :search, :new]
 
   def index
-    @quizzes = Quiz.page(params[:page]).per(params[:per_page] || 10)
+    if params[:per_page] == '30'
+      @quizzes = Quiz.page(params[:page]).per(30)
+    else
+      @quizzes = Quiz.page(params[:page]).per(10)
+    end
   end
 
   def new
@@ -48,7 +52,9 @@ class QuizzesController < ApplicationController
     keyword = params[:search]
 
     # 問題を検索する処理（例として問題文にキーワードが含まれる問題を検索）
-    @quizzes = Quiz.where('problem_statement LIKE ?', "%#{keyword}%")
+    @quizzes = Quiz.where('problem_statement LIKE ?', "%#{keyword}%").page(params[:page]).per(params[:per_page] || 10)
+
+    render :index
   end
 
   private
