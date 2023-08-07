@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :require_login, except: %i[new login logout]
+  # before_action :require_login, except: %i[new login logout]
   # ログインページ
   def new
   end

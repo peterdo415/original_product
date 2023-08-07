@@ -1,11 +1,25 @@
-<div style="height: calc(100vh - 58.59px); min-height: 400px;" class="d-flex align-items-center">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-xl-5 col-md-8">
-        <%= form_with url: login_path, class: 'bg-white  rounded-5 shadow-5-strong p-5', id: 'login-form' do |f| %>
-          <%= f.submit 'ログイン', class: 'btn btn-primary btn-block' %>
-        <% end %>
-      </div>
-    </div>
+<div>
+  <!-- クライアントライブラリの読み込み 下記1行を追加 -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+  <h1 class="font-bold text-4xl">ログイン</h1>
+
+  <!-- Googleログインボタンの表示 ここから追加 -->
+  <div id="g_id_onload"
+    data-client_id="665242331319-60h6339l3bp22eo1pqg3645p18ttu37p.apps.googleusercontent.com"
+    data-login_uri="http://localhost:3000/google_login_api/callback"
+    data-auto_prompt="false">
   </div>
+  <div class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left">
+  </div>
+  <!-- ここまで追加 -->
 </div>

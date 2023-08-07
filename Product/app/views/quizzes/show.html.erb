@@ -1,62 +1,42 @@
 <!-- app/views/quizzes/show.html.erb -->
-<script>
-  // チェックボックスをクリックしたときに他の選択肢のチェックを外す
-  const checkboxes = document.querySelectorAll('input[type="radio"]');
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', (event) => {
-      checkboxes.forEach((otherCheckbox) => {
-        if (otherCheckbox !== checkbox) {
-          otherCheckbox.checked = false;
-        }
-      });
-    });
-  });
-</script>
-
 <div class="container mt-4">
-  <div class="bg-white p-4 rounded-lg shadow-md">
-    <h3 class="text-lg font-semibold mb-2"><%= @quiz.problem_statement %></h3>
-    
-    <% if logged_in? && @quiz.user == current_user %>
-      <%= link_to '編集', edit_quiz_path(@quiz), class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold mb-2' %>
-    <% end %>
-
-    <% if @quiz.answer_count < 10 %>
-      <% if @quiz.answer_count == 0 %>
-        <p class="font-semibold mb-2">回答がありません。</p>
-      <% else %>
-        <p class="font-semibold mb-2">試用期間中（回答数が10件以下）</p>
-      <% end %>
-    <% else %>
-      <p class="font-semibold mb-2">正答率: <%= @quiz.correct_rate %> %</p>
-      <p class="font-semibold mb-2">難易度: <%= @quiz.difficulty %></p>
-    <% end %>
-
-    <% if params[:correct].present? %>
-      <% if params[:correct] == "true" %>
-        <p class="text-green-500 font-semibold mb-2">正解です！</p>
-      <% else %>
-        <p class="text-red-500 font-semibold mb-2">不正解です！</p>
-      <% end %>
-    <% end %>
-
-    <%= form_with model: @quiz, url: quiz_answers_path(@quiz), method: :post do |f| %>
-      <div class="mb-2">
-        <%= f.label :option, class: 'font-semibold' %>
-      </div>
-      <div class="mb-4">
-        <%= f.radio_button :option, '1', id: 'option_1' %>
-        <%= f.label :option_1, '選択肢1', for: 'option_1' %>
-      </div>
-      <div class="mb-4">
-        <%= f.radio_button :option, '2', id: 'option_2' %>
-        <%= f.label :option_2, '選択肢2', for: 'option_2' %>
-      </div>
-      <div class="mb-4">
-        <%= f.radio_button :option, '3', id: 'option_3' %>
-        <%= f.label :option_3, '選択肢3', for: 'option_3' %>
-      </div>
-      <%= f.submit '回答する', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
-    <% end %>
+  <div class="mb-4">
+    <h2 class="text-xl font-semibold">カテゴリ: <%= @quiz.categories.pluck(:name).join(", ") %></h2>
   </div>
+
+  <div class="mb-4">
+    <h2 class="text-xl font-semibold">問題文</h2>
+    <p><%= @quiz.problem_statement %></p>
+  </div>
+
+  <% if current_user == @quiz.user %>
+    <div class="mb-4">
+      <%= link_to "編集", edit_quiz_path(@quiz), class: "px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold" %>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @quiz.answers.new, url: quiz_answers_path(@quiz)) do |f| %>
+    <div class="mb-4">
+      <label>
+        <%= radio_button_tag "option", "1", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= @quiz.first_option %>
+      </label>
+    </div>
+
+    <div class="mb-4">
+      <label>
+        <%= radio_button_tag "option", "2", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= @quiz.second_option %>
+      </label>
+    </div>
+
+    <div class="mb-4">
+      <label>
+        <%= radio_button_tag "option", "3", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= @quiz.third_option %>
+      </label>
+    </div>
+
+    <%= f.submit "選択した答えを送信", class: "px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold" %>
+  <% end %>
 </div>

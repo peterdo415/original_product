@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'google_login_api/callback'
   root 'quizzes#index'
   
   # ログイン関連
@@ -29,4 +30,7 @@ Rails.application.routes.draw do
       get 'show_30'
     end
   end
+
+  # Google認証
+  post '/google_login_api/callback', to: 'google_login_api#callback'
 end

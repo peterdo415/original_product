@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <h2 class="text-xl font-semibold mb-4">問題作成</h2>
 
-  <%= form_with model: @quiz, url: quizzes_path, local: true, data: { controller: "quiz-form", action: "click->quiz-form#selectOption" } do |f| %>
+  <%= form_with model: @quiz, url: quizzes_path, local: true, data: { controller: "quiz-form" } do |f| %>
     <div class="mb-4">
       <%= f.label :problem_statement, "問題文", class: "font-semibold" %>
       <%= f.text_area :problem_statement, class: "rounded-lg p-2 border border-gray-200 bg-white", rows: 4 %>
@@ -9,8 +9,8 @@
 
     <% (1..3).each do |option_num| %>
       <div class="flex items-center mb-2">
-        <%= f.text_field :option, name: "option_#{option_num}", class: "rounded-lg p-2 border border-gray-200 bg-white mr-2 option-text w-1/2", placeholder: "選択肢#{option_num}" %>
-        <%= f.check_box :correct_option, class: "option-radio", data: { action: "click->quiz-form#selectOption" }, value: option_num %>
+        <%= f.text_field :option, id: "option_#{option_num}" , class: "rounded-lg p-2 border border-gray-200 bg-white mr-2 option-text w-1/2", placeholder: "選択肢#{option_num}" %>
+        <%= f.radio_button :correct_option, option_num, class: "option-radio", data: { action: "click->quiz-form#selectOption" } %>
         <%= f.label :correct_option, "正解", class: "ml-2" %>
       </div>
     <% end %>

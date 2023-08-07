@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  before_action :require_login, except: [:show, :index, :search, :new]
+  #before_action :require_login, except: [:show, :index, :search, :new]
 
   def index
     if params[:per_page] == '30'
@@ -28,11 +28,11 @@ class QuizzesController < ApplicationController
   end
 
   def edit
-    @quiz = current_user.quizzes.find(params[:id])
+    @quiz = Quiz.find(params[:id])
   end
 
   def update
-    @quiz = current_user.quizzes.find(params[:id])
+    @quiz = Quiz.find(params[:id])
     if @quiz.update(quiz_params)
       redirect_to @quiz, notice: "問題を更新しました。"
     else
@@ -41,18 +41,26 @@ class QuizzesController < ApplicationController
   end
 
   def destroy
-    @quiz = current_user.quizzes.find(params[:id])
+    @quiz = Quiz.find(params[:id])
     @quiz.destroy
     redirect_to edit_user_path, notice: "問題を削除しました。"
   end
 
   # モデルに定義するべき？
   def search
-    # 検索フォームで入力されたキーワードを取得
     keyword = params[:search]
+    category = params[:category]
 
-    # 問題を検索する処理（例として問題文にキーワードが含まれる問題を検索）
-    @quizzes = Quiz.where('problem_statement LIKE ?', "%#{keyword}%").page(params[:page]).per(params[:per_page] || 10)
+    @quizzes = Quiz.joins(:categories)
+
+    # 問題文とカテゴリー名の部分一致検索
+    if keyword.present? && category.present?
+      @quizzes = @quizzes.where('problem_statement LIKE ? OR categories.name LIKE ?', "%#{keyword}%", "%#{category}%")
+    elsif keyword.present?
+      @quizzes = @quizzes.where('problem_statement LIKE ?', "%#{keyword}%")
+    elsif category.present?
+      @quizzes = @quizzes.where('categories.name LIKE ?', "%#{category}%")
+    end
 
     render :index
   end

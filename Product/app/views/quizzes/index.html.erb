@@ -8,6 +8,11 @@
         <%= f.text_field :search, value: params[:search], placeholder: "問題検索", class: "rounded-l-lg p-2 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" %>
         <button type="submit" class="px-4 rounded-r-lg bg-blue-500 text-white font-semibold">検索</button>
       </div>
+
+      <div class="mb-4">
+      <%= f.label :category, "カテゴリー", class: "font-semibold" %>
+      <%= f.select :category, options_for_select(Category.all.pluck(:name), params[:category]), { include_blank: true }, class: "rounded-lg p-2 border border-gray-200 bg-white" %>
+    </div>
     <% end %>
 
 

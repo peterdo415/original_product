@@ -8,14 +8,9 @@
     </div>
 
     <div class="mb-4">
-      <% @quiz.options.each do |option| %>
-        <%= f.text_field :option, class: "rounded-lg p-2 border border-gray-200 bg-white mb-2", value: option %>
-        <%= f.radio_button :correct_option, option, class: "correct-option" %>
-        <%= f.label :correct_option, "正解", class: "ml-2" %>
-        <br>
-      <% end %>
+      <%= @quiz.first_option %>
     </div>
 
-    <%= f.submit '問題更新', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+    <%= f.submit '更新', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
   <% end %>
 </div>
