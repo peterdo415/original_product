@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # ログイン関連
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
-  delete '/logout', to: 'sessions#logout'
+  get '/logout', to: 'sessions#logout'
 
   # ユーザー登録ページ
   get '/signup', to: 'users#new'

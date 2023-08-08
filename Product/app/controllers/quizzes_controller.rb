@@ -1,5 +1,5 @@
 class QuizzesController < ApplicationController
-  #before_action :require_login, except: [:show, :index, :search, :new]
+  before_action :require_login, except: [:show, :index, :search]
 
   def index
     if params[:per_page] == '30'
@@ -16,7 +16,7 @@ class QuizzesController < ApplicationController
   def create
     @quiz = current_user.quizzes.build(quiz_params)
     if @quiz.save
-      redirect_to @quiz, notice: "問題を作成しました。"
+      redirect_to quiz_path(@quiz), notice: "問題を作成しました。"
     else
       render :new
     end
@@ -62,13 +62,23 @@ class QuizzesController < ApplicationController
       @quizzes = @quizzes.where('categories.name LIKE ?', "%#{category}%")
     end
 
+    # ページネーションを再設定
+    @quizzes = @quizzes.page(params[:page]).per(params[:per_page] || 10)
+
     render :index
   end
 
   private
 
   def quiz_params
-    params.require(:quiz).permit(:problem_statement, :first_option, :second_option, :third_option, :correct_option)
+    params.require(:quiz).permit(
+      :problem_statement,
+      :first_option,
+      :second_option,
+      :third_option,
+      :correct_option,
+      category_ids: []
+    )
   end
 
 end

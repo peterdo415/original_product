@@ -6,8 +6,9 @@ class GoogleLoginApiController < ApplicationController
 
   def callback
     payload = Google::Auth::IDTokens.verify_oidc(params[:credential], aud: '665242331319-60h6339l3bp22eo1pqg3645p18ttu37p.apps.googleusercontent.com')
-    user = User.find_or_create_by(email: payload['email'])
+    user = User.find_or_create_by(name: payload['name'], email: payload['email'])
     session[:user_id] = user.id
+    @current_user = user
     redirect_to quizzes_path, notice: 'ログインしました'
   end
 

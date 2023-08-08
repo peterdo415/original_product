@@ -1,12 +1,19 @@
 class ApplicationController < ActionController::Base
-  #before_action :require_login
-
   private
 
   def require_login
-    unless @current_user
+    unless logged_in?
       flash[:alert] = "ログインしてください"
       redirect_to login_path
     end
   end
+
+  def logged_in?
+    !!current_user
+  end
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
 end

@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_action :require_login
   def create
     @quiz = Quiz.find(params[:quiz_id])
     selected_option = params[:quiz][:option].to_i
