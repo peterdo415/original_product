@@ -18,21 +18,21 @@
   <%= form_with(model: @quiz.answers.new, url: quiz_answers_path(@quiz)) do |f| %>
     <div class="mb-4">
       <label>
-        <%= radio_button_tag "option", "1", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= radio_button_tag "answer[option]", "1", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
         <%= @quiz.first_option %>
       </label>
     </div>
 
     <div class="mb-4">
       <label>
-        <%= radio_button_tag "option", "2", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= radio_button_tag "answer[option]", "2", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
         <%= @quiz.second_option %>
       </label>
     </div>
 
     <div class="mb-4">
       <label>
-        <%= radio_button_tag "option", "3", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <%= radio_button_tag "answer[option]", "3", false, class: "option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
         <%= @quiz.third_option %>
       </label>
     </div>

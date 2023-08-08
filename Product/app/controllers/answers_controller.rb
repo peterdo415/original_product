@@ -2,21 +2,26 @@ class AnswersController < ApplicationController
   before_action :require_login
   def create
     @quiz = Quiz.find(params[:quiz_id])
-    selected_option = params[:quiz][:option].to_i
+    @answer = @quiz.answers.new(answer_params)
 
-    # 回答を作成
-    @answer = Answer.new(quiz: @quiz, user: current_user, option: selected_option)
-    @answer.save
+    if @answer.save
+      # ポイントを追加する処理
+      add_points_to_user(@answer.user, @quiz.difficulty * 10)
 
-    # 正解か不正解かを判定
-    @correct = @quiz.correct_option == selected_option
+      redirect_to quiz_path(@quiz), notice: "回答が送信されました。"
+    else
+      redirect_to quiz_path(@quiz, correct: @correct)
+    end
+  end
 
-    @quiz.set_difficulty if @quiz.answer_count > 10
+  private
 
-    # 正解時にのみポイントを加算
-    add_point if @correct
+  def answer_params
+    params.require(:answer).permit(:option)
+  end
 
-    # 問題詳細ページにリダイレクトして正解か不正解を表示
-    redirect_to quiz_path(@quiz, correct: @correct)
+  def add_points_to_user(user, points)
+    user.points += points
+    user.save
   end
 end

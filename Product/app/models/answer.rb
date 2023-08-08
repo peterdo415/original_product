@@ -6,10 +6,6 @@ class Answer < ApplicationRecord
 
   private
 
-  def add_point
-    user.points.create(points: quiz.difficulty * 10)
-  end
-
   def update_quiz_counts
     # 対象のクイズを取得
     quiz = self.quiz

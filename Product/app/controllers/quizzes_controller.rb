@@ -18,6 +18,7 @@ class QuizzesController < ApplicationController
     if @quiz.save
       redirect_to quiz_path(@quiz), notice: "問題を作成しました。"
     else
+      puts @quiz.errors.full_messages
       render :new
     end
   end
@@ -71,6 +72,7 @@ class QuizzesController < ApplicationController
   private
 
   def quiz_params
+    correct_option = params[:correct_option].to_i
     params.require(:quiz).permit(
       :problem_statement,
       :first_option,
@@ -78,7 +80,7 @@ class QuizzesController < ApplicationController
       :third_option,
       :correct_option,
       category_ids: []
-    )
+    ).merge(correct_option: correct_option)
   end
 
 end
