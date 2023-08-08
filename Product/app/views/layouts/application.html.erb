@@ -12,6 +12,15 @@
 
   <body>
     <%= render 'layouts/header' %>
+
+    <div class="flash-messages">
+      <% flash.each do |type, message| %>
+        <div class="bg-gray-100 border-t-4 <% if type == 'notice' %>border-blue-500<% elsif type == 'success' %>border-green-500<% elsif type == 'error' %>border-red-500<% end %> p-4 text-gray-800">
+          <p><%= message %></p>
+        </div>
+      <% end %>
+    </div>
+
     <%= yield %>
   </body>
 </html>

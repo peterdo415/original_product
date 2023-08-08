@@ -2,6 +2,12 @@ class AnswersController < ApplicationController
   before_action :require_login
   def create
     @quiz = Quiz.find(params[:quiz_id])
+
+    if params[:answer].nil? || params[:answer][:option].blank?
+      redirect_to quiz_path(@quiz), notice: "選択肢を選択してください。"
+      return
+    end
+
     @answer = @quiz.answers.new(answer_params)
 
     if @answer.save
