@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :require_login
+
   def create
     @quiz = Quiz.find(params[:quiz_id])
 
@@ -8,26 +9,40 @@ class AnswersController < ApplicationController
       return
     end
 
-    @answer = @quiz.answers.new(answer_params)
+    option = params[:answer][:option].to_i
+    unless [1, 2, 3].include?(option)
+      redirect_to quiz_path(@quiz), notice: "選択肢が無効です。"
+      return
+    end
+
+    @answer = Answer.new(option: option, user: @current_user, quiz: @quiz)
 
     if @answer.save
-      # ポイントを追加する処理
-      add_points_to_user(@answer.user, @quiz.difficulty * 10)
-
-      redirect_to quiz_path(@quiz), notice: "回答が送信されました。"
+      if @answer.option == @quiz.correct_option
+        add_points_to_user(@answer.user, calculate_point)
+        notice_message = "正解です、ポイントが追加されました。"
+      else
+        notice_message = "不正解です。"
+      end
     else
-      redirect_to quiz_path(@quiz, correct: @correct)
+      error_message = @answer.errors.full_messages.join(", ")
+      notice_message = "回答の送信に問題がありました: #{error_message}"
     end
+
+    redirect_to quiz_path(@quiz), notice: notice_message
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:option)
+    params.require(:answer).permit(:option, :user_id, :quiz_id)
   end
 
-  def add_points_to_user(user, points)
-    user.points += points
-    user.save
+  def calculate_point
+    @quiz.difficulty * 10
+  end
+
+  def add_points_to_user(user, point)
+    user.update(point: user.point + point)
   end
 end

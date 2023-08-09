@@ -8,7 +8,11 @@
 
 # ユーザー作成
 10.times do
-  User.create(name: Faker::Name.unique.name)
+  User.create(
+    name: Faker::Name.name,
+    email: Faker::Internet.email,
+    point: Faker::Number.between(from: 0, to: 1000)
+  )
 end
 
 # カテゴリ作成
@@ -22,7 +26,7 @@ end
 User.all.each do |user|
   10.times do
     quiz = user.quizzes.create(
-      difficulty: rand(0..100),
+      difficulty: rand(0..5),
       problem_statement: Faker::Lorem.sentence,
       first_option: Faker::Lorem.word,
       second_option: Faker::Lorem.word,
@@ -32,4 +36,3 @@ User.all.each do |user|
     quiz.categories << Category.all.sample(2)
   end
 end
-

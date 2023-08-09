@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_04_123234) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_074300) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "option", null: false
     t.bigint "user_id", null: false
@@ -25,14 +25,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_123234) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "points", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "point", default: 0
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_points_on_user_id"
   end
 
   create_table "quiz_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -64,11 +56,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_123234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", null: false
+    t.integer "point", default: 0
   end
 
   add_foreign_key "answers", "quizzes"
   add_foreign_key "answers", "users"
-  add_foreign_key "points", "users"
   add_foreign_key "quiz_categories", "categories"
   add_foreign_key "quiz_categories", "quizzes"
   add_foreign_key "quizzes", "users"

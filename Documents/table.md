@@ -1,7 +1,6 @@
 ```mermaid
 erDiagram
   User ||--o{ Answer : creates
-  User ||--o{ Point : has
   User ||--o{ Comment : creates
   User ||--o{ Quiz : creates
 
@@ -14,12 +13,14 @@ erDiagram
   User {
     int id
     string name "unique"
+    string email "unique"
+    int point "default:0"
   }
 
   Quiz {
     int id
-    int answer_count "回答数 def:0"
-    int correct_count "正解数 def:0"
+    int answer_count "回答数 default:0"
+    int correct_count "正解数 default:0"
     int difficulty "default:0"
     text problem_statement
     text first_option
@@ -34,12 +35,6 @@ erDiagram
     int option "回答時の選択肢"
     int user_id "foreign key"
     int quiz_id "foreign key"
-  }
-
-  Point {
-    int id
-    int point
-    int user_id "foreign key"
   }
 
   Comment {

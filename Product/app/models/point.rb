@@ -1,3 +1,3 @@
 class Point < ApplicationRecord
-  t.belongs_to :users
+  t.belongs_to :user
 end

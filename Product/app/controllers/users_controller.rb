@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   # ログインしていない場合、特定のアクションを除いてログインページにリダイレクトする
-  before_action :require_login, except: %i[new create]
+  before_action :require_login, except: %i[new create show]
 
   # 登録ページ
   def new
@@ -13,17 +13,17 @@ class UsersController < ApplicationController
 
   # ダッシュボードページ
   def show
-    @user = @current_user
+    @user = User.find(params[:id])
   end
 
   # プロフィール編集ページ
   def edit
-    @user = @current_user
+    @user = User.find(params[:id])
   end
 
   # プロフィール更新
   def update
-    @user = @current_user
+    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to user_path(@user), notice: 'プロフィールが更新されました。'
     else
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
   # アカウント削除
   def destroy
-    @user = @current_user
+    @user = User.find(params[:id])
     @user.destroy
     session[:user_id] = nil
     redirect_to root_path, notice: 'アカウントが削除されました。'
