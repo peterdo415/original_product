@@ -1,16 +1,47 @@
+<!-- app/views/quizzes/edit.html.erb -->
 <div class="container mt-4">
   <h2 class="text-xl font-semibold mb-4">問題編集</h2>
 
-  <%= form_with model: @quiz, url: quiz_path(@quiz), method: :patch do |f| %>
+  <%= form_with model: @quiz, url: quiz_path(@quiz), method: :patch, local: true, data: { controller: "quiz-form" } do |f| %>
     <div class="mb-4">
-      <%= f.label :problem_statement, class: "font-semibold" %>
-      <%= f.text_area :problem_statement, class: "rounded-lg p-2 border border-gray-200 bg-white" %>
+      <%= f.label :problem_statement, "問題文", class: "font-semibold" %>
+      <%= f.text_area :problem_statement, class: "rounded-lg p-2 border border-gray-200 bg-white w-full", rows: 4 %>
     </div>
 
     <div class="mb-4">
-      <%= @quiz.first_option %>
+      <%= f.label :first_option, "選択肢1", class: "font-semibold" %>
+      <div class="flex items-center">
+        <%= f.text_field :first_option, class: "rounded-lg p-2 border border-gray-200 bg-white w-full" %>
+        <%= radio_button_tag "correct_option", "1", @quiz.correct_option == 1, class: "ml-2 option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <label for="correct_option_1" class="ml-1">正解</label>
+      </div>
     </div>
 
-    <%= f.submit '更新', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+    <div class="mb-4">
+      <%= f.label :second_option, "選択肢2", class: "font-semibold" %>
+      <div class="flex items-center">
+        <%= f.text_field :second_option, class: "rounded-lg p-2 border border-gray-200 bg-white w-full" %>
+        <%= radio_button_tag "correct_option", "2", @quiz.correct_option == 2, class: "ml-2 option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <label for="correct_option_2" class="ml-1">正解</label>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :third_option, "選択肢3", class: "font-semibold" %>
+      <div class="flex items-center">
+        <%= f.text_field :third_option, class: "rounded-lg p-2 border border-gray-200 bg-white w-full" %>
+        <%= radio_button_tag "correct_option", "3", @quiz.correct_option == 3, class: "ml-2 option-radio", data: { controller: "quiz-form-for-show", action: "click->quiz-form-for-show#selectOption" } %>
+        <label for="correct_option_3" class="ml-1">正解</label>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :category_ids, "カテゴリ", class: "font-semibold" %>
+      <%= f.collection_select :category_ids, Category.all, :id, :name, { prompt: "カテゴリを選択" }, { class: "rounded-lg p-2 border border-gray-200 bg-white" } %>
+    </div>
+
+    <div class="text-center">
+      <%= f.submit '更新', class: 'px-4 py-2 rounded-lg bg-blue-500 text-white font-semibold' %>
+    </div>
   <% end %>
 </div>
