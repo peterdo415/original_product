@@ -17,8 +17,11 @@ class AnswersController < ApplicationController
 
     @answer = Answer.new(option: option, user: @current_user, quiz: @quiz)
 
-    if @answer.save
-      if @answer.option == @quiz.correct_option
+
+    if @answer.option == @quiz.correct_option && user_answered_to_quiz?(@answer.user, @quiz)
+      notice_message = "正解です。(正解済み)"
+    elsif @answer.save
+      if @answer.option == @quiz.correct_option && !@answer.answered_correctly
         add_points_to_user(@answer.user, calculate_point)
         notice_message = "正解です、ポイントが追加されました。"
       else
@@ -44,5 +47,10 @@ class AnswersController < ApplicationController
 
   def add_points_to_user(user, point)
     user.update(point: user.point + point)
+  end
+
+  # ユーザーが問題に回答済みかどうか
+  def user_answered_to_quiz?(user, quiz)
+    user.answers.exists?(quiz_id: quiz.id)
   end
 end

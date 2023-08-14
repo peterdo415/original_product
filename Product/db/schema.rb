@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_074300) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_14_110601) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "option", null: false
     t.bigint "user_id", null: false
     t.bigint "quiz_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "answered_correctly", default: false
     t.index ["quiz_id"], name: "index_answers_on_quiz_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
