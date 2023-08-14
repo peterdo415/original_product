@@ -2,13 +2,10 @@ class UsersController < ApplicationController
   # ログインしていない場合、特定のアクションを除いてログインページにリダイレクトする
   before_action :require_login, except: %i[new create show]
 
-  # 登録ページ
   def new
   end
 
-  # 登録
   def create
-
   end
 
   # ダッシュボードページ
@@ -43,6 +40,6 @@ class UsersController < ApplicationController
 
   # ユーザー登録時のStrong Parameters
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email)
   end
 end
