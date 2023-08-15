@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'プロフィールが更新されました。'
+      redirect_to user_path(@user), notice: 'プロフィールが更新されました。', status: :unprocessable_entity
     else
       render :edit
     end
@@ -30,10 +30,9 @@ class UsersController < ApplicationController
 
   # アカウント削除
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+    User.find(params[:id]).destroy!
     session[:user_id] = nil
-    redirect_to root_path, notice: 'アカウントが削除されました。'
+    redirect_to root_path, notice: 'アカウントが削除されました。', status: :see_other
   end
 
   private
