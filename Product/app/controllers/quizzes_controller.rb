@@ -44,7 +44,7 @@ class QuizzesController < ApplicationController
   def destroy
     @quiz = Quiz.find(params[:id])
     @quiz.destroy
-    redirect_to edit_user_path, notice: "問題を削除しました。"
+    redirect_to user_path(@quiz.user), notice: "問題を削除しました。", status: :see_other
   end
 
   # モデルに定義するべき？

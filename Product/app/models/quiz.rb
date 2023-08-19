@@ -1,7 +1,6 @@
 class Quiz < ApplicationRecord
   belongs_to :user
   has_many :answers, dependent: :destroy
-  has_many :comments, dependent: :destroy
   has_many :quiz_categories, dependent: :destroy
   has_many :categories, through: :quiz_categories
 

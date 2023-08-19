@@ -26,4 +26,8 @@
       </ul>
     <% end %>
   </div>
+
+  <div class="mb-4">
+    <%= button_to "退会する", user_path(@user), method: :delete, data: { turbo_confirm: "本当に退会しますか？" }, class: "px-4 py-2 rounded-lg bg-red-500 text-white font-semibold" %>
+  </div>
 </div>
